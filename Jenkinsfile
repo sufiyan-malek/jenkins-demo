@@ -4,15 +4,15 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/sufiyan-malek/jenkins-demo.git'
+                git branch: 'main', url: 'https://github.com/sufiyan-malek/jenkins-demo.git'
             }
         }
 
         stage('Run Script') {
             steps {
                 sh '''
-                  chmod +x app.sh
-                  ./app.sh
+                  chmod +x details.sh
+                  ./details.sh
                 '''
             }
         }
