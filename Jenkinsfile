@@ -2,19 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+
+        stage('Build Image') {
             steps {
-                git branch: 'main', url: 'https://github.com/sufiyan-malek/jenkins-demo.git'
+                sh 'docker build -t demoapp:v1 .'
             }
         }
 
-        stage('Run Script') {
+        stage('Run Container') {
             steps {
-                sh '''
-                  chmod +x details.sh
-                  ./details.sh
-                '''
+                sh 'docker rm -f demoapp || true'
+                sh 'docker run --name demoapp demoapp:v1'
             }
         }
+
     }
 }
