@@ -1,3 +1,4 @@
 #!/bin/bash
-echo "CI/CD App Running"
+echo "Production CI/CD App"
+echo "Build Number: $BUILD_NUMBER"
 date
