@@ -1,49 +1,25 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE = "demoapp"
-    }
-
-    triggers {
-        githubPush()
-    }
-
     stages {
 
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main',
+                url: 'https://github.com/sufiyan-malek/jenkins-demo.git'
             }
         }
 
-        stage('Verify Files') {
+        stage('Docker Build') {
             steps {
-                sh 'ls -l'
+                sh 'docker build -t jenkins-demo:1.0 .'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Run Container') {
             steps {
-                sh 'docker build -t $IMAGE:${BUILD_NUMBER} .'
+                sh 'docker run --rm jenkins-demo:1.0'
             }
-        }
-
-        stage('Deploy Container') {
-            steps {
-                sh 'docker rm -f demoapp || true'
-                sh 'docker run --name demoapp $IMAGE:${BUILD_NUMBER}'
-            }
-        }
-
-    }
-
-    post {
-        success {
-            echo "Deployment successful"
-        }
-        failure {
-            echo "Pipeline failed"
         }
     }
 }
