@@ -1,4 +1,3 @@
 #!/bin/bash
-echo "Hello from Jenkins + Git"
+echo "CI/CD App Running"
 date
-hostname
